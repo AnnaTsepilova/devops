@@ -1,0 +1,29 @@
+image:
+  repository: 678132509745.dkr.ecr.eu-west-1.amazonaws.com/lesson-5-ecr
+  tag: latest
+  pullPolicy: IfNotPresent
+
+autoscaling:
+  minReplicas: 2
+  maxReplicas: 6
+  averageCPUUtilizationPercentage: 70
+  averageMemoryUtilizationMib: 512Mi
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: false
+  className: nginx
+  host: django.example.com
+  path: /
+  pathType: Prefix
+  tls: true
+
+config:
+	POSTGRES_HOST: db 
+	POSTGRES_PORT: 5432
+	POSTGRES_USER: django_user
+	POSTGRES_DB: django_db
+	POSTGRES_PASSWORD: pass9764gd

@@ -22,8 +22,8 @@ spec:
   }
 
   environment {
-    ECR_REGISTRY = "397114334021.dkr.ecr.us-west-2.amazonaws.com"
-    IMAGE_NAME   = "app"
+    ECR_REGISTRY = "678132509745.dkr.ecr.us-east-1.amazonaws.com"
+    IMAGE_NAME   = "lesson-5-ecr"
     IMAGE_TAG    = "latest"
   }
 
@@ -34,7 +34,7 @@ spec:
           sh '''
             /kaniko/executor \\
               --context `pwd` \\
-              --dockerfile `pwd`/Dockerfile \\
+              --dockerfile `pwd`/docker/Dockerfile \\
               --destination=$ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG \\
               --cache=true \\
               --insecure \\

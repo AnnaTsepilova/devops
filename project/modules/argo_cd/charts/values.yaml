@@ -1,0 +1,28 @@
+applications:
+  - name: django-app
+    namespace: default
+    project: default
+    source:
+      repoURL: https://github.com/AnnaTsepilova/devops.git
+      path: project/charts/django-app
+      targetRevision: lesson-8-9
+      helm:
+        valueFiles:
+          - values.yaml
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: default
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+
+repositories:
+  - name: django-app
+    url: https://github.com/AnnaTsepilova/devops.git
+    username: ${GIT_USERNAME}
+    password: ${GIT_PAT_TOKEN}
+
+repoConfig:
+  insecure: "true"
+  enableLfs: "true"

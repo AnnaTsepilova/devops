@@ -32,9 +32,10 @@ spec:
       steps {
         container('kaniko') {
           sh '''
+            cd ./docker/django;
             /kaniko/executor \\
               --context `pwd` \\
-              --dockerfile `pwd`/docker/django/Dockerfile \\
+              --dockerfile `pwd`/Dockerfile \\
               --destination=$ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG \\
               --cache=true \\
               --insecure \\

@@ -14,6 +14,49 @@ module "vpc" {
   vpc_name           = var.vpc_name           # Ім'я VPC
 }
 
+# Створюємо базу данних
+module "rds" {
+  source = "./modules/rds"
+
+  name                       = "myapp-db"      # Назва бази данних чи кластера Aurora
+  use_aurora                 = false           # Переключення між Aurora та Postgres
+  aurora_instance_count      = 2               # Кількість нод Aurora
+
+  # --- Aurora-only ---
+  engine_cluster             = "aurora-postgresql"
+  engine_version_cluster     = "15.3"
+  parameter_group_family_aurora = "aurora-postgresql15"
+  
+
+  # --- RDS-only ---
+  engine                     = "postgres"               # Ти бази данних "postgres" чи "mysql"
+  engine_version             = "17.4"                   # Версія бази данних
+  parameter_group_family_rds = "postgres17"             # Name of the DB parameter group to associate.
+
+  # Common
+  instance_class             = "db.t3.medium"           # Тип інстанса
+  allocated_storage          = 20                       # Розмір сховища для бази данних у Gb
+  db_name                    = "myapp"                  # Назва початкової бази в середені інстанса
+  username                   = "postgres"               # Root користувач
+  password                   = "admin123AWS23"          # Пароль Root користувача
+  subnet_private_ids         = module.vpc.private_subnets
+  subnet_public_ids          = module.vpc.public_subnets
+  publicly_accessible        = false                    # Перемикач доступа до бази данних з мережі інтернет публічна \ приватна
+  vpc_id                     = module.vpc.vpc_id        # VPC id
+  multi_az                   = true                     # High Avaliabilty мультізона
+  backup_retention_period    = 7                        # Кількість резервних копій
+  parameters = {
+    max_connections              = "200"                # Ліміт одночасних підключень
+    log_min_duration_statement   = "500"
+  }
+
+  tags = {
+    Environment = "dev"
+    Project     = "myapp"
+  }
+}
+
+
 # Підключаємо модуль ECR
 module "ecr" {
   source       = "./modules/ecr"

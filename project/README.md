@@ -133,9 +133,40 @@ module "rds" {
 terraform init
 terraform plan
 terraform apply
+```
 
+# Встановлення prometheus
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+kubectl create namespace monitoring
+helm install prometheus prometheus-community/prometheus --namespace monitoring
+
+kubectl get all -n monitoring
+kubectl port-forward -n monitoring svc/prometheus-server 9090:80
+```
+
+# Встановлення grafana
+```
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+helm install grafana grafana/grafana \
+  --namespace monitoring \
+  --create-namespace \
+  --set adminPassword=SecretPassword
+
+kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode
+kubectl port-forward svc/grafana 3000:80 -n monitoring
+```
+
+# Встановлення додатка
+```
 helm install django-app ./django-app
+```
 
+
+# Видалення ресурсів
+```
 terraform destroy
 ```
 

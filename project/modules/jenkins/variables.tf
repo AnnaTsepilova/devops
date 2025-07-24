@@ -24,3 +24,13 @@ variable "oidc_provider_url" {
   description = "OIDC-provider URL"
   type = string
 }
+
+variable "git_login" {
+  default = "GitHub login"
+  type = string
+}
+
+variable "git_token" {
+  default = "GitHub token"
+  type = string
+}

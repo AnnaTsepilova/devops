@@ -20,10 +20,9 @@ resource "helm_release" "argo_apps" {
 
   values = [
     templatefile("${path.module}/charts/values.yaml", {
-      "GIT_USERNAME": "AnnaTsepilova",
-      "GIT_PAT_TOKEN": ""
+      "GIT_USERNAME" : var.git_login,
+      "GIT_PAT_TOKEN" : var.git_token
     })
   ]
   depends_on = [helm_release.argo_cd]
 }
-

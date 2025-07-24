@@ -15,3 +15,13 @@ variable "chart_version" {
   type        = string
   default     = "5.46.4" 
 }
+
+variable "git_login" {
+  default = "GitHub login"
+  type = string
+}
+
+variable "git_token" {
+  default = "GitHub token"
+  type = string
+}

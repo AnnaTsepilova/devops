@@ -80,10 +80,14 @@ resource "helm_release" "jenkins" {
   namespace        = var.namespace
   repository       = "https://charts.jenkins.io"
   chart            = "jenkins"
-  version          = "5.8.27"
+  version          = "5.8.70"
   create_namespace = true
 
   values = [
-    file("${path.module}/values.yaml")
+    templatefile("${path.module}/values.yaml", {
+      "GIT_USERNAME" : var.git_login,
+      "GIT_PAT_TOKEN" : var.git_token
+    })
   ]
+
 }

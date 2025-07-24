@@ -47,8 +47,8 @@
                   - usernamePassword:
                       scope: GLOBAL
                       id: github-token
-                      username: AnnaTsepilova
-                      password: 
+                      username: ${GIT_USERNAME}
+                      password: ${GIT_PAT_TOKEN}
                       description: GitHub PAT
       seed-job: |
         jobs:

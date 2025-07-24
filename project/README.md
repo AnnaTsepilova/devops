@@ -48,8 +48,7 @@ project/
 │   │   ├── values.yaml      # Конфігурація jenkins
 │   │   └── outputs.tf       # Виводи (URL, пароль адміністратора)
 │   │ 
-│   └── argo_cd/             # ✅ Новий модуль для Helm-установки Argo CD
-│       ├── jenkins.tf       # Helm release для Jenkins
+│   └── argo_cd/             # Новий модуль для Helm-установки Argo CD
 │       ├── variables.tf     # Змінні (версія чарта, namespace, repo URL тощо)
 │       ├── providers.tf     # Kubernetes+Helm.  переносимо з модуля jenkins
 │       ├── values.yaml      # Кастомна конфігурація Argo CD
@@ -175,3 +174,24 @@ terraform destroy
 1. В Jenkins запускаємо pipeline seed-job для динамічного створення іншого pipeline goit-django-docker
 2. В Jenkins запускаємо pipeline goit-django-docker для збірки та деплою Docker image у AWS ECR
 3. В ArgoCD перевіряємо статус застосунку після синхронізації
+
+
+# Screenshots
+
+## ArgoCD
+![screen](../screenshots/hw_01_argocd_lb.png)
+
+## K8s resources
+![screen](../screenshots/hw_02.png)
+![screen](../screenshots/hw_03.png)
+![screen](../screenshots/hw_04.png)
+
+## Jenkins
+![screen](../screenshots/hw_05_jenkins.png)
+
+## ArgoCD port-forwarded
+![screen](../screenshots/hw_06_argocd.png)
+
+## Grafana port-forwarded
+![screen](../screenshots/hw_07_grafana.png)
+

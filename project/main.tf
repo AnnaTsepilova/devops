@@ -26,7 +26,7 @@ module "rds" {
   engine_cluster             = "aurora-postgresql"
   engine_version_cluster     = "15.3"
   parameter_group_family_aurora = "aurora-postgresql15"
-  
+
 
   # --- RDS-only ---
   engine                     = "postgres"               # Ти бази данних "postgres" чи "mysql"
@@ -82,13 +82,13 @@ resource "aws_eks_access_entry" "root_access" {
   type              = "STANDARD"
 }
 
-resource "aws_eks_access_policy_association" "example" {
+resource "aws_eks_access_policy_association" "access_policy" {
   cluster_name  = var.eks_name
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   principal_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
 
   access_scope {
-    type       = "cluster"
+    type = "cluster"
     ##namespaces = ["example-namespace"]
   }
 }
@@ -113,13 +113,19 @@ module "jenkins" {
   oidc_provider_url = module.eks.oidc_provider_url
 
   providers = {
-    helm = helm
+    helm       = helm
     kubernetes = kubernetes
   }
+
+  git_login = ""
+  git_token = ""
 }
 
 module "argo_cd" {
   source        = "./modules/argo_cd"
   namespace     = "argocd"
   chart_version = "5.46.4"
+
+  git_login = ""
+  git_token = ""
 }
